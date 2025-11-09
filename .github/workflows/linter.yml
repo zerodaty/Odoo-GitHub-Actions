@@ -1,0 +1,62 @@
+#=========================================================================
+#  File       : linter.yml                                               =
+#  Author     : Zerodaty https://github.com/zerodaty/odoo-github-actions =
+#  Description: Workflow for code quality verification                   =
+#  Copyright (C) 2023 Zerodaty <https://github.com/zerodaty>             =
+#=========================================================================
+
+# First Workflow: Odoo Code Quality
+name: Odoo Code Quality
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Download YOUR addons in the 'custom' folder
+      - name: Checkout Custom Addons
+        uses: actions/checkout@v4
+        with:
+          path: "custom"
+
+      # Step 2: Download Odoo 18 source code in the 'odoo' folder
+      - name: Checkout Odoo Source Code
+        uses: actions/checkout@v4
+        with:
+          repository: "odoo/odoo"
+          depth: 1
+          branch: "18.0"
+          path: "odoo"
+
+      # Step 3: Configure Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11" # Odoo 18 usa 3.11+
+
+      # Step 4: Install linting dependencies
+      - name: Install Linting Dependencies
+        run: pip install flake8 pylint black isort
+
+      # Step 5: Run all linters
+      - name: Run Linters on Custom Addons
+        working-directory: ./custom
+        run: |
+          export PYTHONPATH="${PYTHONPATH}:../odoo"
+
+          echo "--- 1. Checking Code Formatting (Black) ---"
+          black . --check --diff
+
+          echo "--- 2. Checking Import Order (isort) ---"
+          isort . --check-only --profile black --diff
+
+          echo "--- 3. Checking Code Style (Flake8) ---"
+          flake8 .
+
+          echo "--- 4. Running Deep Analysis (Pylint) ---"
+          pylint --rcfile=.pylintrc $(find . -maxdepth 2 -type f -name "__manifest__.py" | xargs dirname)

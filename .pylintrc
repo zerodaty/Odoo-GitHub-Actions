@@ -1,0 +1,23 @@
+[MASTER]
+disable=
+
+# Disable "noisy" warnings in Odoo.
+
+disable=
+    missing-docstring,          # Odoo does not require docstrings in all methods.
+    invalid-name,               # Allows short variables like 'cr', 'uid', 'ids'.
+    protected-access,           # Allows access to attributes starting with '_' (e.g. _name).
+    too-many-public-methods,    # Odoo models often have many methods.
+    attribute-defined-outside-init, # Odoo defines fields at class level, not in __init__.
+    logging-format-interpolation,
+    wrong-import-position,      # Let isort handle import positions.
+    no-member,                  # Pylint sometimes doesn't detect ORM members dynamically.
+    pointless-statement
+
+[REPORTS]
+
+output-format=colorized
+
+[DESIGN]
+# Allows common variable names in Odoo (cr, uid, etc.)
+good-names=i,j,k,ex,Run,_,id,db,env,api,self,cls,cr,uid,context

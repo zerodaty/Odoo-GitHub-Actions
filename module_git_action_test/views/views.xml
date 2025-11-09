@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="module_git_action_test.list">
+      <field name="name">ModuleGitActionTest list</field>
+      <field name="model">module_git_action_test.module_git_action_test</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </list>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="module_git_action_test.action_window">
+      <field name="name">ModuleGitActionTest window</field>
+      <field name="res_model">module_git_action_test.module_git_action_test</field>
+      <field name="view_mode">list,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="module_git_action_test.action_server">
+      <field name="name">ModuleGitActionTest server</field>
+      <field name="model_id" ref="model_module_git_action_test_module_git_action_test"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "list,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="ModuleGitActionTest" id="module_git_action_test.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="module_git_action_test.menu_1" parent="module_git_action_test.menu_root"/>
+    <menuitem name="Menu 2" id="module_git_action_test.menu_2" parent="module_git_action_test.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="module_git_action_test.menu_1_list" parent="module_git_action_test.menu_1"
+              action="module_git_action_test.action_window"/>
+    <menuitem name="Server to list" id="module_git_action_test" parent="module_git_action_test.menu_2"
+              action="module_git_action_test.action_server"/>
+-->
+  </data>
+</odoo>
