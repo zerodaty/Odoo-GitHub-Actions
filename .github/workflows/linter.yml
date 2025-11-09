@@ -29,8 +29,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: "odoo/odoo"
-          depth: 1
-          branch: "18.0"
+          fetch-depth: 1
+          ref: "18.0"
           path: "odoo"
 
       # Step 3: Configure Python environment
@@ -41,7 +41,7 @@ jobs:
 
       # Step 4: Install linting dependencies
       - name: Install Linting Dependencies
-        run: pip install flake8 pylint black isort
+        run: pip install flake8 pylint black isort flake8-quotes
 
       # Step 5: Run all linters
       - name: Run Linters on Custom Addons
@@ -50,7 +50,7 @@ jobs:
           export PYTHONPATH="${PYTHONPATH}:../odoo"
 
           echo "--- 1. Checking Code Formatting (Black) ---"
-          black . --check --diff
+          black . --check --diff --skip-string-normalization
 
           echo "--- 2. Checking Import Order (isort) ---"
           isort . --check-only --profile black --diff

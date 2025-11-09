@@ -4,3 +4,5 @@ max-line-length = 120
 
 # Ignore common folders.
 exclude = .git,__pycache__,docs,venv,build,dist,*.egg-info
+# Use single quotes for strings.
+inline-quotes = '
